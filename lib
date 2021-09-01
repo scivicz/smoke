@@ -1,0 +1,197 @@
+local lib = Instance.new("ScreenGui")
+local MainFrame = Instance.new("Frame")
+local UICorner = Instance.new("UICorner")
+local TabsHolder = Instance.new("Frame")
+local UIListLayout = Instance.new("UIListLayout")
+local GuiName = Instance.new("TextLabel")
+local PageContainer = Instance.new("Frame")
+lib.Name = "lib"
+lib.Parent = game.CoreGui
+lib.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+MainFrame.Name = "MainFrame"
+MainFrame.Parent = lib
+MainFrame.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+MainFrame.Position = UDim2.new(0.201890036, 0, 0.409815967, 0)
+MainFrame.Size = UDim2.new(0, 509, 0, 291)
+UICorner.Parent = MainFrame
+TabsHolder.Name = "TabsHolder"
+TabsHolder.Parent = MainFrame
+TabsHolder.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TabsHolder.BackgroundTransparency = 1.000
+TabsHolder.Position = UDim2.new(0.0196463652, 0, 0.144329891, 0)
+TabsHolder.Size = UDim2.new(0, 128, 0, 237)
+UIListLayout.Parent = TabsHolder
+UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
+UIListLayout.Padding = UDim.new(0, 10)
+GuiName.Name = "GuiName"
+GuiName.Parent = MainFrame
+GuiName.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+GuiName.BackgroundTransparency = 1.000
+GuiName.Position = UDim2.new(0.0196463652, 0, 0.0240549836, 0)
+GuiName.Size = UDim2.new(0, 201, 0, 35)
+GuiName.Font = Enum.Font.SourceSans
+GuiName.Text = "Name"
+GuiName.TextColor3 = Color3.fromRGB(255, 255, 255)
+GuiName.TextSize = 30.000
+GuiName.TextXAlignment = Enum.TextXAlignment.Left
+PageContainer.Name = "PageContainer"
+PageContainer.Parent = MainFrame
+PageContainer.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+PageContainer.BackgroundTransparency = 1.000
+PageContainer.Position = UDim2.new(0.282907665, 0, 0.144329891, 0)
+PageContainer.Size = UDim2.new(0, 352, 0, 237)
+local function XQKZQY_fake_script() -- lib.MainScript 
+	local script = Instance.new('LocalScript', lib)
+
+	UIS = game:GetService('UserInputService')
+	UIS.InputBegan:Connect(function(key,b) 
+		if key.KeyCode == Enum.KeyCode.V and not b then
+			if MainFrame.Visible == true then
+				MainFrame.Visible = false
+			else
+				MainFrame.Visible = true
+			end
+		end
+	end)
+end
+coroutine.wrap(XQKZQY_fake_script)()
+local function YBQLGK_fake_script() -- lib.Dragify 
+	local script = Instance.new('LocalScript', lib)
+
+	local UIS = game:GetService("UserInputService")
+	function dragify(Frame)
+	    dragToggle = nil
+	    local dragSpeed = 0.50
+	    dragInput = nil
+	    dragStart = nil
+	    local dragPos = nil
+	    function updateInput(input)
+	        local Delta = input.Position - dragStart
+	        local Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + Delta.X, startPos.Y.Scale, startPos.Y.Offset + Delta.Y)
+	        game:GetService("TweenService"):Create(Frame, TweenInfo.new(0.30), {Position = Position}):Play()
+	    end
+	    Frame.InputBegan:Connect(function(input)
+	        if (input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch) and UIS:GetFocusedTextBox() == nil then
+	            dragToggle = true
+	            dragStart = input.Position
+	            startPos = Frame.Position
+	            input.Changed:Connect(function()
+	                if input.UserInputState == Enum.UserInputState.End then
+	                    dragToggle = false
+	                end
+	            end)
+	        end
+	    end)
+	    Frame.InputChanged:Connect(function(input)
+	        if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+	            dragInput = input
+	        end
+	    end)
+	    game:GetService("UserInputService").InputChanged:Connect(function(input)
+	        if input == dragInput and dragToggle then
+	            updateInput(input)
+	        end
+	    end)
+	end
+	
+	dragify(MainFrame)
+end
+coroutine.wrap(YBQLGK_fake_script)()
+local lib = {}
+function lib.HideTabs()
+	for _, Tabs in pairs(MainFrame.PageContainer:GetChildren()) do
+		if Tabs then
+			Tabs.Visible = false
+		end
+	end
+end
+
+function lib.setName(Name)
+	MainFrame.GuiName.Text = Name
+end
+
+function lib.addButton(text)
+	local Button = Instance.new("TextButton")
+	Button.Name = "Button"
+	Button.Parent = MainFrame.PageContainer
+	Button.BackgroundColor3 = Color3.fromRGB(34, 34, 34)
+	Button.BorderSizePixel = 0
+	Button.Size = UDim2.new(0, 128, 0, 30)
+	Button.Font = Enum.Font.SourceSans
+	Button.TextColor3 = Color3.fromRGB(255, 255, 255)
+	Button.TextSize = 20.000
+end
+
+function lib.addTab(Text)
+	local Button = Instance.new("TextButton")
+	Button.Name = "Button"
+	Button.Parent = MainFrame.TabsHolder
+	Button.BackgroundColor3 = Color3.fromRGB(34, 34, 34)
+	Button.BorderSizePixel = 0
+	Button.Size = UDim2.new(0, 128, 0, 30)
+	Button.Font = Enum.Font.SourceSans
+	Button.TextColor3 = Color3.fromRGB(255, 255, 255)
+	Button.TextSize = 20.000
+	Button.Text = Text
+	local PageTemplate = Instance.new("Frame")
+	local UIGridLayout = Instance.new("UIGridLayout")
+	PageTemplate.Visible = false
+	PageTemplate.Name = Text.."Page"
+	PageTemplate.Parent = MainFrame.PageContainer
+	PageTemplate.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	PageTemplate.BackgroundTransparency = 1.000
+	PageTemplate.Position = UDim2.new(-0.00118325837, 0, -0.00334943831, 0)
+	PageTemplate.Size = UDim2.new(0, 352, 0, 237)
+	UIGridLayout.Parent = PageTemplate
+	UIGridLayout.SortOrder = Enum.SortOrder.LayoutOrder
+	UIGridLayout.CellPadding = UDim2.new(0, 26, 0, 20)
+	UIGridLayout.CellSize = UDim2.new(0, 100, 0, 28)
+	Button.MouseButton1Click:Connect(function()
+		HideTabs()
+		PageTemplate.Visible = true
+	end)
+end
+
+function lib.addToggle(Text,CallBack)
+	local ThisButton = false
+	local Toggle = Instance.new("Frame")
+	local Value = Instance.new("Frame")
+	local TriggerButton = Instance.new("TextButton")
+	Toggle.Name = "Toggle"
+	Toggle.Parent = MainFrame
+	Toggle.BackgroundColor3 = Color3.fromRGB(34, 34, 34)
+	Toggle.BorderSizePixel = 0
+	Toggle.Position = UDim2.new(0.37721023, 0, 0.536082447, 0)
+	Toggle.Size = UDim2.new(0, 97, 0, 28)
+
+	Value.Name = "Value"
+	Value.Parent = Toggle
+	Value.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+	Value.BorderSizePixel = 0
+	Value.Size = UDim2.new(0, 9, 0, 28)
+
+	TriggerButton.Name = "TriggerButton"
+	TriggerButton.Parent = Toggle
+	TriggerButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	TriggerButton.BackgroundTransparency = 1.000
+	TriggerButton.BorderColor3 = Color3.fromRGB(27, 42, 53)
+	TriggerButton.BorderSizePixel = 0
+	TriggerButton.Position = UDim2.new(0.0927835032, 0, 0, 0)
+	TriggerButton.Size = UDim2.new(0, 88, 0, 28)
+	TriggerButton.Font = Enum.Font.SourceSans
+	TriggerButton.Text = Text
+	TriggerButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+	TriggerButton.TextSize = 15.000
+	TriggerButton.MouseButton1Click:Connect(function()
+		if ThisButton == false then
+			Value.BackgroundColor3 = Color3.fromRGB(0, 255, 0)
+			ThisButton = true
+		elseif ThisButton == true then
+			Value.BackgroundColor3 = Color3.fromRGB(255, 0, 0)	
+			ThisButton = false
+		end
+		CallBack(ThisButton)
+	end)
+end
+
+return lib
