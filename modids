@@ -1,3 +1,4 @@
+--yes we skidded swagmode cry about it
 ModIDS = { 
 120704495,
 
@@ -12,8 +13,6 @@ ModIDS = {
 
 
 }
-
---\\ Don't mess with anything below this
 function swagnames()
     for _,Player in pairs(game:GetService('Players'):GetChildren()) do
         if table.find(ModIDS, Player.UserId) then
